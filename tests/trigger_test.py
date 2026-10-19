@@ -21,7 +21,7 @@ CASES = [
     ("readme", "Write a README for a small CLI called `tidy` that deletes empty directories under a path. Output the README only.", {"dev-artifacts"}),
     ("changelog", "Write the changelog entry for v2.0.0: we removed the deprecated `--legacy` flag, added `--json` output, and fixed a crash on empty input.", {"dev-artifacts"}),
     ("docstring", "Write JSDoc comments for this function: function getBird(id, includeRetired = false) { /* returns a Bird or throws NotFoundError */ }", {"code-and-comments"}),
-    ("code-prose", "Write a short doc paragraph telling readers to set the API_TIMEOUT environment variable in config.yaml and then call the client.connect method.", {"code-and-comments"}),
+    ("code-prose", "Write a short reference paragraph describing what the API_TIMEOUT environment variable does, how config.yaml overrides it, and how the client.connect method uses it.", {"code-and-comments"}),
     ("procedure", "Write step-by-step instructions for installing and configuring Postgres 16 on Ubuntu for a first-time user.", {"procedures"}),
     ("review", "Review this doc for quality: 'Please note that it is simple to deploy. Just run the script here and the thing will be handled.'", {"review"}),
     # Negative controls: the skill should not load.

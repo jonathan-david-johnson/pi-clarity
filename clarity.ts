@@ -5,7 +5,19 @@
  * to disable the supplemental communication instruction for the session.
  */
 
+import { realpathSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+
+// Resolve through the symlink in ~/.pi/agent/extensions so the path points into this repo.
+function skillPath(): string {
+	try {
+		return join(dirname(realpathSync(fileURLToPath(import.meta.url))), "skills", "documentation-style", "SKILL.md");
+	} catch {
+		return join(process.env.HOME ?? "~", ".pi/agent/skills/documentation-style/SKILL.md");
+	}
+}
 
 const CUSTOM_TYPE = "clarity-mode";
 const DEFAULT_ENABLED = true;
@@ -15,7 +27,7 @@ interface ClarityState {
 	timestamp: number;
 }
 
-const CLARITY_INSTRUCTION = `
+const CLARITY_INSTRUCTION = () => `
 
 ## Communication style: Clear mode
 
@@ -25,7 +37,7 @@ const CLARITY_INSTRUCTION = `
 - Separate verified facts from assumptions, recommendations, and uncertainty.
 - Default to a short response for routine status or completion updates. Expand when the user asks for detail or when a decision, risk, plan, or explanation requires it.
 - Use structure when it improves scanability. Do not add headings or lists merely for decoration.
-- When writing or reviewing documentation, commit messages, PR descriptions, READMEs, or code comments, follow the documentation-style skill.
+- Before you write or review documentation, a commit message, a PR description, a README, a changelog, or a code comment, read ${skillPath()} first, then the one reference module it names.
 `;
 
 function getState(ctx: { sessionManager: { getEntries(): Array<{ type: string; customType?: string; data?: unknown }> } }): boolean {
@@ -68,7 +80,7 @@ export default function (pi: ExtensionAPI) {
 		const enabled = getState(ctx);
 		updateStatus(enabled, ctx);
 		if (!enabled) return;
-		return { systemPrompt: event.systemPrompt + CLARITY_INSTRUCTION };
+		return { systemPrompt: event.systemPrompt + CLARITY_INSTRUCTION() };
 	});
 
 	pi.on("session_start", async (_event, ctx) => updateStatus(getState(ctx), ctx));
