@@ -25,7 +25,7 @@ const CLARITY_INSTRUCTION = `
 - Separate verified facts from assumptions, recommendations, and uncertainty.
 - Default to a short response for routine status or completion updates. Expand when the user asks for detail or when a decision, risk, plan, or explanation requires it.
 - Use structure when it improves scanability. Do not add headings or lists merely for decoration.
-- When creating, substantially revising, or reviewing documentation, follow the documentation-style skill.
+- When writing or reviewing documentation, commit messages, PR descriptions, READMEs, or code comments, follow the documentation-style skill.
 `;
 
 function getState(ctx: { sessionManager: { getEntries(): Array<{ type: string; customType?: string; data?: unknown }> } }): boolean {
