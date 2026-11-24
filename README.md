@@ -22,14 +22,15 @@ Parts of the reference modules are adapted from the [Google developer documentat
 
 ## Install
 
-Symlink the extension and the skill:
+Install it as a pi package:
 
 ```sh
-ln -s "$PWD/clarity.ts" ~/.pi/agent/extensions/clarity.ts
-ln -s "$PWD/skills/documentation-style" ~/.pi/agent/skills/documentation-style
+pi install git:github.com/jonathan-david-johnson/pi-clarity
 ```
 
-Restart pi.
+`package.json` declares `clarity.ts` and the `skills/` directory. Restart pi or run `/reload`.
+
+For local development, install the checkout instead: `pi install ./pi-clarity`.
 
 ## Usage
 
